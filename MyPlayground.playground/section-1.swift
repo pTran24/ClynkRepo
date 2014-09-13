@@ -6,3 +6,20 @@ var str = "Hello, playground"
 
 //Making some changes
 //adding another line
+
+class NamedShape {
+    var numberOfSides: Double = 0
+    var name: String
+    
+    init(name: String) {
+        self.name = name
+    }
+    
+    func simpleDescription() -> String {
+        return "My name is \(name)."
+    }
+}
+
+var shape = NamedShape(name: "Billy")
+shape.simpleDescription()
+shape.numberOfSides = 10
