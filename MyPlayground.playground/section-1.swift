@@ -16,11 +16,30 @@ class NamedShape {
     }
     
     func simpleDescription() -> String {
-        return "My name is \(name)."
+        return "I have \(numberOfSides) sides."
     }
 }
 
 var shape = NamedShape(name: "Billy")
 shape.numberOfSides = 10
 shape.simpleDescription()
-println(shape.numberOfSides)
+
+class Square: NamedShape {
+    var sideLength: Double
+    
+    init(sideLength: Double, name: String){
+        self.sideLength = sideLength
+        super.init(name: name)
+        numberOfSides = 4
+    }
+    override func simpleDescription() -> String {
+        return "A square with sides of length \(sideLength)."
+    }
+    func calcArea() -> Double {
+        return sideLength * sideLength
+    }
+}
+
+var square = Square(sideLength: 7, name: "Sue")
+square.simpleDescription()
+square.calcArea()
