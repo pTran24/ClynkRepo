@@ -21,5 +21,6 @@ class NamedShape {
 }
 
 var shape = NamedShape(name: "Billy")
-shape.simpleDescription()
 shape.numberOfSides = 10
+shape.simpleDescription()
+println(shape.numberOfSides)
