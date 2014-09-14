@@ -95,5 +95,63 @@ triangle.sideLength
 triangle.perimeter = 27
 triangle.sideLength
 
+let optSquare: Square? = Square(sideLength: 2, name: "Tim")
+
+let sideLength = optSquare?.sideLength
+sideLength
+
+enum Rank: Int {
+    case Ace = 1
+    case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
+    //Jack is 11 because it's the 11th mentioned case
+    case Jack, Queen, King
+    func simpleDescription() -> String{
+        switch self {
+        case .Ace:
+            return "ace"
+        case .Jack:
+            return "jack"
+        case .Queen:
+            return "queen"
+        case .King:
+            return "king"
+        default:
+            return String(self.toRaw())
+        }
+    }
+}
+
+let ace = Rank.Ace
+let aceRawValue = ace.toRaw()
+
+//Takes 2 Rank-enum values and compares them
+func compareRank(first: Rank, second: Rank) -> String {
+    first.simpleDescription()
+    second.simpleDescription()
+    if first.toRaw() > second.toRaw() {
+        return "\(first.simpleDescription()) is larger than \(second.simpleDescription())"
+    }
+    else {
+        return "\(second.simpleDescription()) is larger than \(first.simpleDescription())"
+    }
+}
+
+compareRank(Rank.King, Rank.Five)
+
+enum Suit {
+    case Spades, Hearts, Diamonds, Clubs
+    func simpleDescription() -> String {
+        switch self {
+        case .Spades:
+            return "spades"
+        case .Hearts:
+            return "hearts"
+        case .Diamonds:
+            return "diamonds"
+        case .Clubs:
+            return "clubs"
+        }
+    }
+}
 
 
