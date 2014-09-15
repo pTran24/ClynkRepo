@@ -3,6 +3,8 @@
 import UIKit
 
 var str = "Hello, playground"
+var str2 = "something else"
+
 
 //Making some changes
 //adding another line
@@ -175,19 +177,24 @@ struct Card {
         return "The \(rank.simpleDescription()) of \(suit.simpleDesciption())"
     }
     
-    func createDesk() -> [Card] {
+    func createDeck() -> [Card] {
+        
         var deck = [Card]()
         
-        var suitIndex = 1
-        for mySuit in 1...4 {
-            for myRank in 1...13 {
-                let rank = Rank.fromRaw(myRank)
-                let suit = Suit.fromRaw(mySuit)
-                deck.append(Card(rank: , suit: <#Suit#>))
+        var n = 1
+        while let rank = Rank.fromRaw(n) {
+            
+            var m = 1
+            while let suit = Suit.fromRaw(m) {
+                deck.append(Card(rank: rank, suit: suit))
+                m++
             }
+            n++
         }
+        
         return deck
     }
+
 }
 
 let threeOfSpades = Card(rank: .Three, suit: .Spades)
@@ -205,6 +212,7 @@ class CardClass {
     }
 }
 
+
 //example of how classes are pass by references
 let queenOfDiamonds = CardClass(rank: .Queen, suit: .Diamonds)
 queenOfDiamonds.simpleDescription()
@@ -216,3 +224,29 @@ fourOfDiamonds.simpleDescription()
 fourOfDiamonds.rank = .Ace
 fourOfDiamonds.simpleDescription()
 queenOfDiamonds.simpleDescription()
+
+func createDeck() -> [Card] {
+    var deck: [Card]
+    for mySuit in 1...4 {
+        for myRank in 1...13 {
+            var currRank = Rank.fromRaw(myRank)
+            var currSuit = Suit.fromRaw(mySuit)
+            
+            println(currSuit)
+            
+            deck.append(Card(rank: currRank!, suit: currSuit!))
+        }
+    }
+    return deck
+}
+
+var deck = createDeck()
+for card in deck {
+    println("going through")
+}
+
+println("going through")
+
+
+
+
