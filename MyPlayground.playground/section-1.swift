@@ -3,11 +3,6 @@
 import UIKit
 
 var str = "Hello, playground"
-var str2 = "something else"
-
-
-//Making some changes
-//adding another line
 
 class NamedShape {
     var numberOfSides: Double = 0
@@ -124,7 +119,7 @@ enum Rank: Int {
 }
 
 let ace = Rank.Ace
-let aceRawValue = ace.toRaw()()
+let aceRawValue = ace.toRaw()
 
 //Takes 2 Rank-enum values and compares them
 func compareRank(first: Rank, second: Rank) -> String {
@@ -177,28 +172,37 @@ struct Card {
         return "The \(rank.simpleDescription()) of \(suit.simpleDesciption())"
     }
     
+//    func createDeck() -> [Card] {
+//        var deck = [Card]()
+//        var n = 1
+//        while let suit = Suit.fromRaw(n) {
+//            var m = 1
+//            while let rank = Rank.fromRaw(m) {
+//                deck.append(Card(rank: rank, suit: suit))
+//                m++
+//            }
+//            n++
+//        }
+//        return deck
+//    }
     func createDeck() -> [Card] {
-        
         var deck = [Card]()
-        
-        var n = 1
-        while let rank = Rank.fromRaw(n) {
-            
-            var m = 1
-            while let suit = Suit.fromRaw(m) {
-                deck.append(Card(rank: rank, suit: suit))
-                m++
+        for suitIndex in 1...4 {
+            for rankIndex in 1...13 {
+                deck.append(Card(rank: Rank.fromRaw(rankIndex), suit: Suit.fromRaw(suitIndex)))
             }
-            n++
         }
-        
         return deck
     }
-
 }
 
 let threeOfSpades = Card(rank: .Three, suit: .Spades)
 threeOfSpades.simpleDescription()
+//var deck = threeOfSpades.createDeck()
+//
+//for card in deck {
+//    println(card.simpleDescription())
+//}
 
 class CardClass {
     var rank: Rank
@@ -225,27 +229,6 @@ fourOfDiamonds.rank = .Ace
 fourOfDiamonds.simpleDescription()
 queenOfDiamonds.simpleDescription()
 
-func createDeck() -> [Card] {
-    var deck: [Card]
-    for mySuit in 1...4 {
-        for myRank in 1...13 {
-            var currRank = Rank.fromRaw(myRank)
-            var currSuit = Suit.fromRaw(mySuit)
-            
-            println(currSuit)
-            
-            deck.append(Card(rank: currRank!, suit: currSuit!))
-        }
-    }
-    return deck
-}
-
-var deck = createDeck()
-for card in deck {
-    println("going through")
-}
-
-println("going through")
 
 
 
