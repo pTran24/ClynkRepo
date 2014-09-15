@@ -122,7 +122,7 @@ enum Rank: Int {
 }
 
 let ace = Rank.Ace
-let aceRawValue = ace.toRaw()
+let aceRawValue = ace.toRaw()()
 
 //Takes 2 Rank-enum values and compares them
 func compareRank(first: Rank, second: Rank) -> String {
@@ -138,9 +138,9 @@ func compareRank(first: Rank, second: Rank) -> String {
 
 compareRank(Rank.King, Rank.Five)
 
-enum Suit {
-    case Spades, Hearts, Diamonds, Clubs
-    func simpleDescription() -> String {
+enum Suit: Int {
+    case Spades = 1, Diamonds, Clubs, Hearts
+    func simpleDesciption() -> String {
         switch self {
         case .Spades:
             return "spades"
@@ -152,6 +152,67 @@ enum Suit {
             return "clubs"
         }
     }
+    func color() -> String {
+        if (self.simpleDesciption() == "hearts" || self.simpleDesciption() == "diamonds") {
+            return "red"
+        }
+        else {
+            return "black"
+        }
+    }
 }
 
+let hearts = Suit.Hearts
+let heartsDesc = hearts.simpleDesciption()
+hearts.color()
 
+//“structures are always copied when they are passed around in your code, but classes are passed by reference.”
+struct Card {
+    var rank: Rank
+    var suit: Suit
+    
+    func simpleDescription() -> String {
+        return "The \(rank.simpleDescription()) of \(suit.simpleDesciption())"
+    }
+    
+    func createDesk() -> [Card] {
+        var deck = [Card]()
+        
+        var suitIndex = 1
+        for mySuit in 1...4 {
+            for myRank in 1...13 {
+                let rank = Rank.fromRaw(myRank)
+                let suit = Suit.fromRaw(mySuit)
+                deck.append(Card(rank: , suit: <#Suit#>))
+            }
+        }
+        return deck
+    }
+}
+
+let threeOfSpades = Card(rank: .Three, suit: .Spades)
+threeOfSpades.simpleDescription()
+
+class CardClass {
+    var rank: Rank
+    var suit: Suit
+    init(rank: Rank, suit: Suit) {
+        self.rank = rank
+        self.suit = suit
+    }
+    func simpleDescription() -> String {
+        return "The \(rank.simpleDescription()) of \(suit.simpleDesciption())"
+    }
+}
+
+//example of how classes are pass by references
+let queenOfDiamonds = CardClass(rank: .Queen, suit: .Diamonds)
+queenOfDiamonds.simpleDescription()
+queenOfDiamonds.rank = .King
+queenOfDiamonds.simpleDescription()
+
+let fourOfDiamonds = queenOfDiamonds
+fourOfDiamonds.simpleDescription()
+fourOfDiamonds.rank = .Ace
+fourOfDiamonds.simpleDescription()
+queenOfDiamonds.simpleDescription()
