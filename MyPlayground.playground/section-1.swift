@@ -1,6 +1,7 @@
 // Playground - noun: a place where people can play
 
 import UIKit
+let name = "Mr. Awesome"
 
 var str = "Hello, playground"
 
@@ -189,7 +190,7 @@ struct Card {
         var deck = [Card]()
         for suitIndex in 1...4 {
             for rankIndex in 1...13 {
-                deck.append(Card(rank: Rank.fromRaw(rankIndex), suit: Suit.fromRaw(suitIndex)))
+                //deck.append(Card(rank: Rank.fromRaw(rankIndex), suit: Suit.fromRaw(suitIndex)))
             }
         }
         return deck
@@ -229,7 +230,6 @@ fourOfDiamonds.rank = .Ace
 fourOfDiamonds.simpleDescription()
 queenOfDiamonds.simpleDescription()
 
-
-
+//Command + CTRL + Space = Character Map
 
 
