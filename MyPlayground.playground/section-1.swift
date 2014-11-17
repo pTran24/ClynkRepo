@@ -2,11 +2,12 @@
 
 import UIKit
 let name = "Mr. Awesome"
+name
 
 var str = "Hello, playground"
 
-class NamedShape {
-    var numberOfSides: Double = 0
+class NamedShape { //Base class to be extended
+    var numberOfSides: Double = 0 //default size of shape
     var name: String
     
     init(name: String) {
@@ -21,8 +22,10 @@ class NamedShape {
 var shape = NamedShape(name: "Billy")
 shape.numberOfSides = 10
 shape.simpleDescription()
+shape.name
 
 class Square: NamedShape {
+    
     var sideLength: Double
     
     init(sideLength: Double, name: String){
@@ -93,16 +96,16 @@ triangle.sideLength
 triangle.perimeter = 27
 triangle.sideLength
 
-let optSquare: Square? = Square(sideLength: 2, name: "Tim")
+let optSquare: Square? = Square(sideLength: 0, name: "Tim")
 
 let sideLength = optSquare?.sideLength
 sideLength
 
 enum Rank: Int {
     case Ace = 1
-    case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
+    case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King //two is 2 becuase it is the next  case mentioned after 1
     //Jack is 11 because it's the 11th mentioned case
-    case Jack, Queen, King
+    //case Jack, Queen, King
     func simpleDescription() -> String{
         switch self {
         case .Ace:
@@ -114,19 +117,22 @@ enum Rank: Int {
         case .King:
             return "king"
         default:
-            return String(self.toRaw())
+            return String(self.rawValue) //“Use the rawValue property to access the raw value of an enumeration member”
         }
     }
 }
 
 let ace = Rank.Ace
-let aceRawValue = ace.toRaw()
+let myQueen = Rank.Queen
+let queenvalue = myQueen.rawValue
+let aceRawValue = ace.rawValue
 
-//Takes 2 Rank-enum values and compares them
+//Takes 2 Rank-enum values and compares them. Outputs string.
 func compareRank(first: Rank, second: Rank) -> String {
     first.simpleDescription()
     second.simpleDescription()
-    if first.toRaw() > second.toRaw() {
+    
+    if first.rawValue > second.rawValue {
         return "\(first.simpleDescription()) is larger than \(second.simpleDescription())"
     }
     else {
@@ -134,10 +140,10 @@ func compareRank(first: Rank, second: Rank) -> String {
     }
 }
 
-compareRank(Rank.King, Rank.Five)
+compareRank(Rank.Ace, Rank.Ace)
 
-enum Suit: Int {
-    case Spades = 1, Diamonds, Clubs, Hearts
+enum Suit {
+    case Spades, Diamonds, Clubs, Hearts
     func simpleDesciption() -> String {
         switch self {
         case .Spades:
@@ -160,7 +166,7 @@ enum Suit: Int {
     }
 }
 
-let hearts = Suit.Hearts
+let hearts = Suit.Diamonds
 let heartsDesc = hearts.simpleDesciption()
 hearts.color()
 
@@ -172,30 +178,40 @@ struct Card {
     func simpleDescription() -> String {
         return "The \(rank.simpleDescription()) of \(suit.simpleDesciption())"
     }
-    
-//    func createDeck() -> [Card] {
-//        var deck = [Card]()
-//        var n = 1
-//        while let suit = Suit.fromRaw(n) {
-//            var m = 1
-//            while let rank = Rank.fromRaw(m) {
-//                deck.append(Card(rank: rank, suit: suit))
-//                m++
-//            }
-//            n++
-//        }
-//        return deck
-//    }
-    func createDeck() -> [Card] {
-        var deck = [Card]()
-        for suitIndex in 1...4 {
-            for rankIndex in 1...13 {
-                //deck.append(Card(rank: Rank.fromRaw(rankIndex), suit: Suit.fromRaw(suitIndex)))
-            }
-        }
-        return deck
-    }
 }
+func createDeck() -> [Card] {
+    let ranks = [Rank.Ace, Rank.Two, Rank.Three, Rank.Four, Rank.Five, Rank.Six, Rank.Seven, Rank.Eight, Rank.Nine, Rank.Ten, Rank.Jack, Rank.Queen, Rank.King]
+    let suits = [Suit.Spades, Suit.Hearts, Suit.Diamonds, Suit.Clubs]
+    var deck = [Card]()
+    for suit in suits {
+        for rank in ranks {
+            var currCard = Card(rank: rank, suit: suit)
+            deck.append(currCard)
+            //deck.append(Card(rank: rank, suit: suit))
+        }
+    }
+    return deck
+}
+
+var myNewDeck : [Card] = createDeck()
+for myCard in myNewDeck{
+    myCard.simpleDescription()
+}
+
+let randomNum = arc4random_uniform(5)
+
+
+for num in 1...4 {
+    println("hello")
+}
+
+
+
+
+
+
+
+
 
 let threeOfSpades = Card(rank: .Three, suit: .Spades)
 threeOfSpades.simpleDescription()
@@ -205,7 +221,7 @@ threeOfSpades.simpleDescription()
 //    println(card.simpleDescription())
 //}
 
-class CardClass {
+class CardClass { //just an example to show how classes are pass by reference
     var rank: Rank
     var suit: Suit
     init(rank: Rank, suit: Suit) {
@@ -231,5 +247,57 @@ fourOfDiamonds.simpleDescription()
 queenOfDiamonds.simpleDescription()
 
 //Command + CTRL + Space = Character Map
+
+//p41
+enum ServerResponse {
+    case Result(String, String)
+    case Error(String)
+    case Moo(Int)
+}
+
+let success = ServerResponse.Result("6:00 am", "8:09 pm")
+let failure = ServerResponse.Error("Out of cheese.")
+let cow = ServerResponse.Moo(10)
+
+switch cow {
+case let .Result(sunrise, sunset):
+    let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+case let .Error(error):
+    let serverResponse = "Failure... \(error)"
+case let .Moo(someNum):
+    let serverResponse = "Mooo! \(someNum)"
+}
+
+
+//Learning Protocal
+protocol ExampleProtocal {
+    var simpleDescription: String { get }
+    mutating func adjust()
+}
+
+class SimpleClass: ExampleProtocal {
+    var simpleDescription: String = "A very simple class."
+    var anotherProperty: Int = 69105
+    func adjust() {
+        simpleDescription += " Not 100% adjusted."
+    }
+}
+
+var a = SimpleClass()
+a.adjust()
+let aDescription = a.simpleDescription
+
+struct SimpleStructure: ExampleProtocal {
+    var simpleDescription: String = "A simple structure"
+    mutating func adjust() {
+        simpleDescription += " (adjusted)"
+    }
+}
+
+var b = SimpleStructure()
+b.adjust()
+let bDescription = b.simpleDescription
+
+
 
 
